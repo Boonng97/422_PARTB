@@ -1,11 +1,20 @@
 package net.semanticmetadata.lire.sampleapp.MainApp;
 
+import net.semanticmetadata.lire.sampleapp.Indexer;
+import net.semanticmetadata.lire.sampleapp.Searcher;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +30,9 @@ public class Test extends JFrame {
     public JPanel BrowseImagePanel;
     public ImagePanel BrowseImage;
     public JPanel ResultPanel;
-    public JScrollPane ResultImageScroll;
-    
+    public JScrollPane ResultScrollTable;
+    public JTable ResultsTable;
+
     public JButton Indexbtn;
     public JButton IndexStrbtn;
     public JButton OpenDirbtn;
@@ -54,6 +64,7 @@ public class Test extends JFrame {
     final static String RESULTPANEL = "Card with Result";
     final static String BROWSEPANEL = "Card with Browsing";
 
+    private  ResultTable tableModel=new ResultTable();
     public Test(Container pane)
     {
         pane.setLayout(new BorderLayout());
@@ -68,8 +79,8 @@ public class Test extends JFrame {
         BrowseImagePanel=new JPanel();
         BrowseImage=new ImagePanel();
         ResultsCards=new JPanel();
-        ResultPanel=new JPanel();
-        ResultImageScroll=new JScrollPane();
+        ResultPanel=new JPanel(new BorderLayout());
+
         
         Indexbtn=new JButton();
         Indexbtn.setText("Index");
@@ -109,6 +120,11 @@ public class Test extends JFrame {
 //        IndexStrbtn.setBorderPainted(false);
 //        IndexStrbtn.setFocusPainted(false);
         IndexStrbtn.setBackground(Color.white);
+        IndexStrbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartIndexActionPerformed(evt);
+            }
+        });
 
         OpenDirbtn=new JButton();
         OpenDirbtn.setText("Open dir");
@@ -126,6 +142,12 @@ public class Test extends JFrame {
 //        SearchStrbtn.setBorderPainted(false);
 //        SearchStrbtn.setFocusPainted(false);
         SearchStrbtn.setBackground(Color.white);
+        SearchStrbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartSearchActionPerformed(evt);
+//                  test();
+            }
+        });
 
         OpenImgbtn=new JButton();
         OpenImgbtn.setText("Open Image");
@@ -308,14 +330,20 @@ public class Test extends JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(BrowseImagePanel, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
         );
-        
-        ResultPanel.add(ResultImageScroll);
+
+
+
         GroupLayout resultlayout=new GroupLayout(ResultsCards);
         ResultsCards.setLayout(resultlayout);
         resultlayout.setHorizontalGroup(
                 resultlayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(ResultLabel)
-                .addComponent(ResultPanel,GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE,700, GroupLayout.PREFERRED_SIZE)
+                .addGroup(resultlayout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ResultPanel, GroupLayout.PREFERRED_SIZE,700, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                )
+
         );
         
         resultlayout.setVerticalGroup(
@@ -323,7 +351,7 @@ public class Test extends JFrame {
                         .addGroup(resultlayout.createSequentialGroup()
                                 .addComponent(ResultLabel)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ResultPanel, GroupLayout.PREFERRED_SIZE,400, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ResultPanel, GroupLayout.PREFERRED_SIZE,700, GroupLayout.PREFERRED_SIZE)
                         )
                 
         );
@@ -384,4 +412,44 @@ public class Test extends JFrame {
             }
 //        }
     }
+    private void StartIndexActionPerformed(ActionEvent evt)
+    {
+        try {
+            Indexer i = new Indexer();
+            String[] arg = {IndexTF.getText()};
+            i.main(arg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void StartSearchActionPerformed(ActionEvent evt)
+    {
+        try {
+            Searcher i = new Searcher();
+            String[] arg = {SearchTF.getText()};
+            i.main(arg);
+            tableModel.SetTable(i.Result);
+            ResultPanel.add(tableModel.ResultPanel());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+
+            itemStateChanged(RESULTPANEL);
+        }
+    }
+//    private void test() {
+//        try {
+//            ImagePanel t = new ImagePanel();
+//            BufferedImage img = ImageIO.read(new FileInputStream("D:\\4ys1\\422\\cbir (1)\\118.jpg"));
+//            ResultPanel.add(t);
+//            t.setImage(img);
+//            t.repaint();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
 }

@@ -58,11 +58,12 @@ import java.nio.file.Paths;
  * Time: 12:19
  */
 public class Searcher {
-    public static void main(String[] args) throws IOException {
+    public String[] Result=new String[10];
+    public void main(String[] args) throws IOException {
         // Checking if arg[0] is there and if it is an image.
         BufferedImage img = null;
         boolean passed = false;
-        String[] Result=new String[10];
+
         if (args.length > 0) {
             File f = new File(args[0]);
             if (f.exists()) {
@@ -93,10 +94,13 @@ public class Searcher {
         ImageSearchHits hits = searcher.search(img, ir);
         // searching with a Lucene document instance ...
         // ImageSearchHits hits = searcher.search(ir.document(0), ir);
+
         for (int i = 0; i < hits.length(); i++) {
             String fileName = ir.document(hits.documentID(i)).getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)[0];
-            System.out.println(ir.document(hits.documentID(i)).getField(DocumentBuilder.FIELD_NAME_IDENTIFIER).stringValue());
+            Result[i]=fileName;
             System.out.println(hits.score(i) + ": \t" + fileName);
         }
+
     }
+
 }
