@@ -17,7 +17,7 @@
  * We kindly ask you to refer the any or one of the following publications in
  * any publication mentioning or employing Lire:
  *
- * Lux Mathias, Savvas A. Chatzichristofis. Lire: Lucene Image Retrieval –
+
  * An Extensible Java CBIR Library. In proceedings of the 16th ACM International
  * Conference on Multimedia, pp. 1085-1088, Vancouver, Canada, 2008
  * URL: http://doi.acm.org/10.1145/1459359.1459577
@@ -62,6 +62,7 @@ public class Searcher {
         // Checking if arg[0] is there and if it is an image.
         BufferedImage img = null;
         boolean passed = false;
+        String[] Result=new String[10];
         if (args.length > 0) {
             File f = new File(args[0]);
             if (f.exists()) {
@@ -80,7 +81,7 @@ public class Searcher {
         }
 
         IndexReader ir = DirectoryReader.open(FSDirectory.open(Paths.get("index")));
-        ImageSearcher searcher = new GenericFastImageSearcher(30, CEDD.class);
+        ImageSearcher searcher = new GenericFastImageSearcher(10, CEDD.class);
         // ImageSearcher searcher = new GenericFastImageSearcher(30, AutoColorCorrelogram.class); // for another image descriptor ...
 
         /*
@@ -94,6 +95,7 @@ public class Searcher {
         // ImageSearchHits hits = searcher.search(ir.document(0), ir);
         for (int i = 0; i < hits.length(); i++) {
             String fileName = ir.document(hits.documentID(i)).getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)[0];
+            System.out.println(ir.document(hits.documentID(i)).getField(DocumentBuilder.FIELD_NAME_IDENTIFIER).stringValue());
             System.out.println(hits.score(i) + ": \t" + fileName);
         }
     }
