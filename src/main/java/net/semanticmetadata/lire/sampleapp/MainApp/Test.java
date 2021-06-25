@@ -1,3 +1,5 @@
+package net.semanticmetadata.lire.sampleapp.MainApp;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;

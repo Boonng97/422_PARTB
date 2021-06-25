@@ -1,3 +1,5 @@
+package net.semanticmetadata.lire.sampleapp.MainApp;
+
 import javax.swing.*;
 
 public class Main {
