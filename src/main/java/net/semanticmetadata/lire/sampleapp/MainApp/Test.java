@@ -68,7 +68,7 @@ public class Test extends JFrame {
     public Test(Container pane)
     {
         pane.setLayout(new BorderLayout());
-        pane.setPreferredSize(new Dimension(800,500));
+        pane.setPreferredSize(new Dimension(800,700));
         Cards=new JPanel(new CardLayout());
         TabMenu=new JPanel(new BorderLayout());
         TabMenu.setBackground(Color.lightGray);
