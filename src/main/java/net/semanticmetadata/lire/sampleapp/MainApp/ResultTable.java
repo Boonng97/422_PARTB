@@ -33,7 +33,10 @@ public class ResultTable {
                 } else {
                     img = ImageIO.read(new URL(Result[i]));
                 }
-                JLabel imgLabel = new JLabel(new ImageIcon(img));
+                JLabel imgLabel = new JLabel(String.valueOf(i+1));
+                imgLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+                imgLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+                imgLabel.setIcon(new ImageIcon(img));
                 resultPanel.add(imgLabel);
             }
         } catch (MalformedURLException e) {
