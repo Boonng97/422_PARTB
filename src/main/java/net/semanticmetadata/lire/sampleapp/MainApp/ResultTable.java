@@ -1,10 +1,6 @@
 package net.semanticmetadata.lire.sampleapp.MainApp;
 
-import com.drew.imaging.jpeg.JpegProcessingException;
-import com.drew.metadata.MetadataException;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.exif.ExifDirectory;
-import com.drew.metadata.exif.ExifReader;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
