@@ -41,6 +41,7 @@ package net.semanticmetadata.lire.sampleapp;
 
 import net.semanticmetadata.lire.builders.DocumentBuilder;
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
+import net.semanticmetadata.lire.sampleapp.MainApp.Test;
 import net.semanticmetadata.lire.searchers.*;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -82,7 +83,8 @@ public class Searcher {
         }
 
         IndexReader ir = DirectoryReader.open(FSDirectory.open(Paths.get("index")));
-        ImageSearcher searcher = new GenericFastImageSearcher(10, CEDD.class);
+        ImageSearcher searcher = new GenericFastImageSearcher(10, Test.SearchListSelect);
+
         // ImageSearcher searcher = new GenericFastImageSearcher(30, AutoColorCorrelogram.class); // for another image descriptor ...
 
         /*

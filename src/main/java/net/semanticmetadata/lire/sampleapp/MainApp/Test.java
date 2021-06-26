@@ -2,7 +2,9 @@ package net.semanticmetadata.lire.sampleapp.MainApp;
 
 import net.semanticmetadata.lire.sampleapp.Indexer;
 import net.semanticmetadata.lire.sampleapp.Searcher;
-
+import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
+import net.semanticmetadata.lire.imageanalysis.features.global.FCTH;
+import net.semanticmetadata.lire.imageanalysis.features.global.Tamura;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -25,13 +27,14 @@ public class Test extends JFrame {
     public JPanel ButtonMenu;
     public JPanel IndexCards;
     public JPanel SearchCards;
-    public JPanel BrowseCards;
+//    public JPanel BrowseCards;
     public JPanel ResultsCards;
-    public JPanel BrowseImagePanel;
-    public ImagePanel BrowseImage;
+//    public JPanel BrowseImagePanel;
+//    public ImagePanel BrowseImage;
     public JPanel ResultPanel;
-    public JScrollPane ResultScrollTable;
-    public JTable ResultsTable;
+//    public JTable ResultsTable;
+    public JPanel SearchListPanel;
+    public JComboBox<ClassType> SearchList;
 
     public JButton Indexbtn;
     public JButton IndexStrbtn;
@@ -39,22 +42,23 @@ public class Test extends JFrame {
     public JButton Searchbtn;
     public JButton OpenImgbtn;
     public JButton SearchStrbtn;
-    public JButton Browsebtn;
-    public JButton BrowseStrbtn;
+//    public JButton Browsebtn;
+//    public JButton BrowseStrbtn;
     public JButton Resultbtn;
 
     public JLabel IndexLabel;
     public JLabel SearchLabel;
-    public JLabel BrowseLabel;
-    public JLabel BrowseLabel2;
-    public JLabel BrowseTotal;
+    public JLabel SearchListLabel;
+//    public JLabel BrowseLabel;
+//    public JLabel BrowseLabel2;
+//    public JLabel BrowseTotal;
     public JLabel ResultLabel;
     
     public JTextField IndexTF;
     public JTextField SearchTF;
     
     
-    public JSpinner BrowseJS;
+//    public JSpinner BrowseJS;
 
     public JProgressBar IndexJP;
     public JProgressBar SearchJP;
@@ -65,6 +69,7 @@ public class Test extends JFrame {
     final static String BROWSEPANEL = "Card with Browsing";
 
     private  ResultTable tableModel=new ResultTable();
+    public static Class SearchListSelect;
     public Test(Container pane)
     {
         pane.setLayout(new BorderLayout());
@@ -75,9 +80,9 @@ public class Test extends JFrame {
         ButtonMenu=new JPanel();
         IndexCards=new JPanel();
         SearchCards=new JPanel();
-        BrowseCards=new JPanel();
-        BrowseImagePanel=new JPanel();
-        BrowseImage=new ImagePanel();
+//        BrowseCards=new JPanel();
+//        BrowseImagePanel=new JPanel();
+//        BrowseImage=new ImagePanel();
         ResultsCards=new JPanel();
         ResultPanel=new JPanel(new BorderLayout());
 
@@ -104,16 +109,16 @@ public class Test extends JFrame {
             }
         });
 
-        Browsebtn=new JButton();
-        Browsebtn.setText("Browse");
-        Browsebtn.setBackground(Color.lightGray);
-        Browsebtn.setBorderPainted(false);
-        Browsebtn.setFocusPainted(false);
-        Browsebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemStateChanged(BROWSEPANEL);
-            }
-        });
+//        Browsebtn=new JButton();
+//        Browsebtn.setText("Browse");
+//        Browsebtn.setBackground(Color.lightGray);
+//        Browsebtn.setBorderPainted(false);
+//        Browsebtn.setFocusPainted(false);
+//        Browsebtn.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                itemStateChanged(BROWSEPANEL);
+//            }
+//        });
 
         IndexStrbtn=new JButton();
         IndexStrbtn.setText("Start");
@@ -160,9 +165,14 @@ public class Test extends JFrame {
             }
         });
 
-        BrowseStrbtn=new JButton();
-        BrowseStrbtn.setText("Browse");
-        BrowseStrbtn.setBackground(Color.white);
+//        BrowseStrbtn=new JButton();
+//        BrowseStrbtn.setText("Browse");
+//        BrowseStrbtn.setBackground(Color.white);
+//        BrowseStrbtn.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                BrowseSearchActionPerformed(evt);
+//            }
+//        });
 
         Resultbtn=new JButton();
         Resultbtn.setText("Result");
@@ -179,10 +189,12 @@ public class Test extends JFrame {
         IndexLabel.setFont(new Font(IndexLabel.getName(),Font.BOLD,20));
         SearchLabel=new JLabel(" Searching");
         SearchLabel.setFont(new Font(SearchLabel.getName(),Font.BOLD,20));
-        BrowseLabel=new JLabel(" Browse");
-        BrowseLabel.setFont(new Font(BrowseLabel.getName(),Font.BOLD,20));
-        BrowseLabel2=new JLabel(" Current document");
-        BrowseTotal=new JLabel(" (Total: 100)");
+        SearchListLabel=new JLabel(" Type of IndexSearcher :");
+
+//        BrowseLabel=new JLabel(" Browse");
+//        BrowseLabel.setFont(new Font(BrowseLabel.getName(),Font.BOLD,20));
+//        BrowseLabel2=new JLabel(" Current document");
+//        BrowseTotal=new JLabel(" (Total: 100)");
         ResultLabel=new JLabel(" Result");
         ResultLabel.setFont(new Font(ResultLabel.getName(),Font.BOLD,20));
         
@@ -200,17 +212,18 @@ public class Test extends JFrame {
         SearchJP.setString("Searching...");
         SearchJP.setStringPainted(true);
 
-        BrowseJS=new JSpinner();
-        BrowseJS.setValue(1);
-        BrowseJS.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                BrowseJSValuechange(evt);
-            }
-        });
+
+//        BrowseJS=new JSpinner();
+//        BrowseJS.setValue(1);
+//        BrowseJS.addChangeListener(new javax.swing.event.ChangeListener() {
+//            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+//                BrowseJSValuechange(evt);
+//            }
+//        });
 
         ButtonMenu.add(Indexbtn);
         ButtonMenu.add(Searchbtn);
-        ButtonMenu.add(Browsebtn);
+//        ButtonMenu.add(Browsebtn);
         ButtonMenu.add(Resultbtn);
 
         GroupLayout indexlayout=new GroupLayout(IndexCards);
@@ -253,6 +266,25 @@ public class Test extends JFrame {
                     )
         );
 
+        SearchList=new JComboBox<ClassType>();
+        SearchList.setPreferredSize(new Dimension(100,20));
+        SearchList.addItem(new ClassType("CEDD",CEDD.class));
+        SearchList.addItem(new ClassType("FCTH",FCTH.class));
+        SearchList.addItem(new ClassType("Tamura",Tamura.class));
+        SearchListSelect=CEDD.class;
+        SearchList.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
+                //Do Something
+                if (evt.getStateChange() == ItemEvent.SELECTED) {
+                    ClassType item = (ClassType) evt.getItem();
+                    System.out.println(item.returnClass());
+                    SearchListSelect=item.returnClass();
+                }
+
+            }
+        });
+        SearchListPanel=new JPanel();
+        SearchListPanel.add(SearchList);
 
         GroupLayout searchlayout=new GroupLayout(SearchCards);
         SearchCards.setLayout(searchlayout);
@@ -269,7 +301,11 @@ public class Test extends JFrame {
                                                 .addComponent(OpenImgbtn,GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                                         )
                                         .addGroup(GroupLayout.Alignment.TRAILING, searchlayout.createSequentialGroup()
-                                                .addContainerGap(655,Short.MAX_VALUE)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(SearchListLabel)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(SearchListPanel,GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                                .addContainerGap(300,Short.MAX_VALUE)
                                                 .addComponent(SearchStrbtn,GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                                         )
 
@@ -289,47 +325,51 @@ public class Test extends JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(SearchJP,GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SearchStrbtn)
-
+                                .addGroup(searchlayout.createParallelGroup()
+                                        .addComponent(SearchListLabel)
+                                        .addComponent(SearchListPanel)
+                                        .addComponent(SearchStrbtn)
+                                )
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         )
         );
 
-        BrowseImagePanel.setLayout(new BorderLayout());
+//        BrowseImagePanel.setLayout(new BorderLayout());
 //        BrowseImagePanel.add(BrowseImage,BorderLayout.CENTER);
 
-        GroupLayout browselayout=new GroupLayout(BrowseCards);
-        BrowseCards.setLayout(browselayout);
-        browselayout.setHorizontalGroup(
-                browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(browselayout.createSequentialGroup()
-                                .addGroup(browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(BrowseLabel)
-                                        .addGroup(browselayout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(BrowseLabel2)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(BrowseTotal)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(BrowseJS, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(BrowseStrbtn)))
-                                .addGap(354, 354, 354))
-                        .addComponent(BrowseImagePanel,GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
-        browselayout.setVerticalGroup(
-                browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(browselayout.createSequentialGroup()
-                                .addComponent(BrowseLabel)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(browselayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BrowseLabel2)
-                                        .addComponent(BrowseTotal)
-                                        .addComponent(BrowseJS, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(BrowseStrbtn)
-                                        )
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BrowseImagePanel, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-        );
+//        GroupLayout browselayout=new GroupLayout(BrowseCards);
+//        BrowseCards.setLayout(browselayout);
+//        browselayout.setHorizontalGroup(
+//                browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(browselayout.createSequentialGroup()
+//                                .addGroup(browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                                        .addComponent(BrowseLabel)
+//                                        .addGroup(browselayout.createSequentialGroup()
+//                                                .addContainerGap()
+//                                                .addComponent(BrowseLabel2)
+//                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                                                .addComponent(BrowseTotal)
+//                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                                                .addComponent(BrowseJS, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+//                                                .addGap(18, 18, 18)
+//                                                .addComponent(BrowseStrbtn)))
+//                                .addGap(354, 354, 354))
+//                        .addComponent(BrowseImagePanel,GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+//        );
+//        browselayout.setVerticalGroup(
+//                browselayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(browselayout.createSequentialGroup()
+//                                .addComponent(BrowseLabel)
+//                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                                .addGroup(browselayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+//                                        .addComponent(BrowseLabel2)
+//                                        .addComponent(BrowseTotal)
+//                                        .addComponent(BrowseJS, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                                        .addComponent(BrowseStrbtn)
+//                                        )
+//                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+//                                .addComponent(BrowseImagePanel, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+//        );
 
 
 
@@ -355,10 +395,10 @@ public class Test extends JFrame {
                         )
                 
         );
-        
+
         Cards.add(IndexCards,INDEXPANEL);
         Cards.add(SearchCards,SEARCHPANEL);
-        Cards.add(BrowseCards,BROWSEPANEL);
+//        Cards.add(BrowseCards,BROWSEPANEL);
         Cards.add(ResultsCards,RESULTPANEL);
         TabMenu.add(ButtonMenu,BorderLayout.WEST);
         pane.add(TabMenu,BorderLayout.NORTH);
@@ -400,18 +440,7 @@ public class Test extends JFrame {
     }
 
     //spinner value changes
-    private void BrowseJSValuechange(ChangeEvent evt) {
-        int docID = (Integer) BrowseJS.getValue() - 1;
-//        if (docID >= 0 && docID < browseReader.maxDoc()) {
-//            setDocumentImageIcon(docID);
-//        } else {
-            if (docID < 0) {
-                BrowseJS.setValue(1);
-            } else {
-                BrowseJS.setValue(100);
-            }
-//        }
-    }
+
     private void StartIndexActionPerformed(ActionEvent evt)
     {
         try {
@@ -422,8 +451,10 @@ public class Test extends JFrame {
             e.printStackTrace();
         }
     }
+
     private void StartSearchActionPerformed(ActionEvent evt)
     {
+        ResultPanel.removeAll();
         try {
             Searcher i = new Searcher();
             String[] arg = {SearchTF.getText()};
@@ -437,19 +468,9 @@ public class Test extends JFrame {
             itemStateChanged(RESULTPANEL);
         }
     }
-//    private void test() {
-//        try {
-//            ImagePanel t = new ImagePanel();
-//            BufferedImage img = ImageIO.read(new FileInputStream("D:\\4ys1\\422\\cbir (1)\\118.jpg"));
-//            ResultPanel.add(t);
-//            t.setImage(img);
-//            t.repaint();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+
 
 
 }
+

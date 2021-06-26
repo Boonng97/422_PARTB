@@ -45,6 +45,7 @@ import net.semanticmetadata.lire.builders.GlobalDocumentBuilder;
 import net.semanticmetadata.lire.imageanalysis.features.global.AutoColorCorrelogram;
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
 import net.semanticmetadata.lire.imageanalysis.features.global.FCTH;
+import net.semanticmetadata.lire.imageanalysis.features.global.Tamura;
 import net.semanticmetadata.lire.utils.FileUtils;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -95,10 +96,11 @@ public class Indexer {
          */
         globalDocumentBuilder.addExtractor(CEDD.class);
         globalDocumentBuilder.addExtractor(FCTH.class);
-        globalDocumentBuilder.addExtractor(AutoColorCorrelogram.class);
+        globalDocumentBuilder.addExtractor(Tamura.class);
 
         // Creating an Lucene IndexWriter
         IndexWriterConfig conf = new IndexWriterConfig(new WhitespaceAnalyzer());
+        conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         IndexWriter iw = new IndexWriter(FSDirectory.open(Paths.get("index")), conf);
         // Iterating through images building the low level features
         for (Iterator<String> it = images.iterator(); it.hasNext(); ) {
